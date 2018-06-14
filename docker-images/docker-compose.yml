@@ -1,0 +1,20 @@
+version: '3'
+services:
+  Redis:
+    image: redis:4.0.9-alpine
+    container_name: redis
+    hostname: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - ~/redis:/data
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: redis-commander
+    hostname: redis-commander
+    build: .
+    restart: always
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+    ports:
+      - 8081:8081
