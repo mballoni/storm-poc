@@ -12,7 +12,6 @@ services:
     image: rediscommander/redis-commander:latest
     container_name: redis-commander
     hostname: redis-commander
-    build: .
     restart: always
     environment:
       - REDIS_HOSTS=local:redis:6379
