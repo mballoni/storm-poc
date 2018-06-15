@@ -13,7 +13,26 @@ services:
     container_name: redis-commander
     hostname: redis-commander
     restart: always
+    depends_on:
+      - Redis
     environment:
       - REDIS_HOSTS=local:redis:6379
     ports:
       - 8081:8081
+  active-mq:
+    image: webcenter/activemq:latest
+    container_name: ActiveMQ
+    hostname: jms-server
+    environment:
+      - ACTIVEMQ_ADMIN_LOGIN=admin
+      - ACTIVEMQ_ADMIN_PASSWORD=admin
+      - ACTIVEMQ_USERS_storm=storm
+      - ACTIVEMQ_GROUPS_storm=storm
+      - ACTIVEMQ_CONFIG_QUEUES_words=words
+      - ACTIVEMQ_CONFIG_MAXMEMORY=1024
+    ports:
+      - 8161:8161
+      - 61616:61616
+      - 61613:61613
+    volumes:
+      - ~/activemq:/data
